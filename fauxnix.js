@@ -2,6 +2,7 @@ class Fauxnix {
   constructor(events) {
     this.replies = [];
     this.onopen = function() {};
+    this.onclose = function () {};
     events.apply(this);
 
     setTimeout(() => {
@@ -28,6 +29,11 @@ class Fauxnix {
     } else {
       console.warn(`Unhandled message: ${rawMessage}`);
     }
+  }
+
+  close() {
+    this.readyState = 3;
+    this.onclose();
   }
 
   _findReplyFor(message) {
