@@ -7,8 +7,6 @@ define("fauxnix", ["exports", "module"], function (exports, module) {
 
   var Fauxnix = (function () {
     function Fauxnix(events) {
-      var _this = this;
-
       _classCallCheck(this, Fauxnix);
 
       this.replies = [];
@@ -16,10 +14,10 @@ define("fauxnix", ["exports", "module"], function (exports, module) {
       this.onclose = function () {};
       events.apply(this);
 
-      setTimeout(function () {
-        _this.readyState = 1;
-        _this.onopen();
-      }, 500);
+      this.readyState = 1;
+      this.onopen();
+      // setTimeout(() => {
+      // }, 500);
     }
 
     _createClass(Fauxnix, [{
@@ -30,23 +28,19 @@ define("fauxnix", ["exports", "module"], function (exports, module) {
     }, {
       key: "send",
       value: function send(rawMessage) {
-        var _this2 = this;
-
         var message = JSON.parse(rawMessage);
         var reply = this._findReplyFor(message);
 
         if (reply) {
-          (function () {
-            var response = _this2._buildResponse(message, reply);
-            var stringResponse = JSON.stringify(response);
+          var response = this._buildResponse(message, reply);
+          var stringResponse = JSON.stringify(response);
 
-            setTimeout(function () {
-              _this2.onmessage({ data: stringResponse });
-            }, 10);
-          })();
+          this.onmessage({ data: stringResponse });
+          // setTimeout(() => {
+          // }, 10);
         } else {
-          console.warn("Unhandled message: " + rawMessage);
-        }
+            console.warn("Unhandled message: " + rawMessage);
+          }
       }
     }, {
       key: "close",

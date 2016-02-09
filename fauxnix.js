@@ -5,10 +5,10 @@ class Fauxnix {
     this.onclose = function () {};
     events.apply(this);
 
-    setTimeout(() => {
-      this.readyState = 1;
-      this.onopen();
-    }, 500);
+    this.readyState = 1;
+    this.onopen();
+    // setTimeout(() => {
+    // }, 500);
   }
 
   receive(topic, event, callback) {
@@ -23,9 +23,9 @@ class Fauxnix {
       const response = this._buildResponse(message, reply);
       const stringResponse = JSON.stringify(response);
 
-      setTimeout(() => {
-        this.onmessage({ data: stringResponse });
-      }, 10);
+      this.onmessage({ data: stringResponse });
+      // setTimeout(() => {
+      // }, 10);
     } else {
       console.warn(`Unhandled message: ${rawMessage}`);
     }
