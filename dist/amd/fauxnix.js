@@ -13,6 +13,7 @@ define(["exports", "module"], function (exports, module) {
 
       this.replies = [];
       this.onopen = function () {};
+      this.onclose = function () {};
       events.apply(this);
 
       setTimeout(function () {
@@ -46,6 +47,12 @@ define(["exports", "module"], function (exports, module) {
         } else {
           console.warn("Unhandled message: " + rawMessage);
         }
+      }
+    }, {
+      key: "close",
+      value: function close() {
+        this.readyState = 3;
+        this.onclose();
       }
     }, {
       key: "_findReplyFor",

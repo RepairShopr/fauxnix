@@ -12,6 +12,7 @@ var Fauxnix = (function () {
 
     this.replies = [];
     this.onopen = function () {};
+    this.onclose = function () {};
     events.apply(this);
 
     setTimeout(function () {
@@ -45,6 +46,12 @@ var Fauxnix = (function () {
       } else {
         console.warn("Unhandled message: " + rawMessage);
       }
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.readyState = 3;
+      this.onclose();
     }
   }, {
     key: "_findReplyFor",
